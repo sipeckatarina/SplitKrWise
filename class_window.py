@@ -1,5 +1,8 @@
 import tkinter as tk
 
+EURO = 1
+KUNE = 7.38
+USD = 1.16
 
 class Person():
 
@@ -14,18 +17,21 @@ class Person():
         x = ''
         if self.balance < 0:
             x = 'owes'
+            bal = 0 - self.balance
         else:
             x = 'gets'
-        return 'A person named {} who '.format(self.name) + x + ' {} euros.'.format(self.balance)
+            bal = self.balance
+        return 'A person named {} who '.format(self.name) + x + ' {} euros.'.format(bal)
 
     def gives(self, amount, *args):
         money = amount / (len(args[0]))
+        money = float("{0:.2f}".format(money))
         self.balance += amount
         for person in args:
             for p in person:
                 p.balance = p.balance -   money
 
-
+#__________________________________________________________________________________________________________
 
 class Main_window():
 
@@ -33,6 +39,7 @@ class Main_window():
     def __init__(self, people):
 
         self.people = people
+        self.number_people = len(people)
 
         self.root = tk.Tk()
         self.root.title('SplitKrWise')
@@ -79,9 +86,7 @@ class Main_window():
         self.root.destroy()
         Change_window(self.people)
 
-
-
-#Main([Person('Katja', 10), Person('Andraž', 8)])
+#__________________________________________________________________________________________________________
 
 class Buttonn():
 
@@ -106,11 +111,9 @@ class Buttonn():
         if self.button.config('relief')[-1] == 'raised':
             self.button.config(relief='sunken', bg='grey83')
             self.l.append(self.person)
-            print(self.l)
         else:
             self.button.config(relief='raised', bg='grey93')
             self.l.remove(self.person)
-            print(self.l)
 
 
 class Change_window():
@@ -118,6 +121,7 @@ class Change_window():
     def __init__(self, people):
 
         self.people = people
+        self.number_people = people
         self.amount = 0
 
         self.root = tk.Tk()
@@ -176,8 +180,12 @@ class Change_window():
             p = self.l
             p[0].gives(int(self.amount), p[1:])
             self.root.destroy()
+            self.memory_update()
             Main_window(self.people)
         else:
             tk.Label(self.downdown, text='Vpišite naravno število.').pack()
 
-#Change_window([Person('Katja', 10), Person('Andraž', 8), Person('Katja', 10), Person('Andraž', 8)])
+    def memory_update(self):
+        with open('memory.txt', 'w') as mem:
+            for person in self.people:
+                print('{}, {}'.format(person.name, person.balance), file=mem)

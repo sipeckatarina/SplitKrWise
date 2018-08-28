@@ -1,4 +1,5 @@
 import tkinter as tk
+import class_window as cw
 
 
 class Start_number():
@@ -34,10 +35,16 @@ class Start_number():
         self.ok.grid(row=3)
 
         self.empty_row3 = tk.Label(self.down)
-        self.empty_row3.grid(row=4)
+        self.empty_row3.grid(row=4, column=1)
+
+        tk.Button(self.down, text='STARI PODATKI', command=self.old_window).grid(row=3, column=2)
 
 
         self.root.mainloop()
+
+    def old_window(self):
+        self.number_people = 1000
+        self.root.destroy()
 
     def ok(self):
         self.number_people = self.number_entry.get()
@@ -69,7 +76,7 @@ class Ent():
 
 class Start_names():
 
-    def __init__(self, number_people=4):
+    def __init__(self, number_people=4, open_old='no'):
 
         self.number_people = number_people
 
