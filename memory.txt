@@ -1,5 +1,6 @@
-Ti, 12.0
-Ljudje, -1.0
-So, -8.0
-Le, 8.5
-Primer, -11.5
+Bjanka, 7.0
+Lena, -4.0
+Rena, 0.0
+Titi, 2.0
+Fizi, -1.0
+Skips, -4.0

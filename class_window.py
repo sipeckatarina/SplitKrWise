@@ -27,9 +27,10 @@ class Person():
         money = amount / (len(args[0]))
         money = float("{0:.2f}".format(money))
         self.balance += amount
+        #print(self.name, amount, args)
         for person in args:
             for p in person:
-                p.balance = p.balance -   money
+                p.balance = p.balance - money
 
 #__________________________________________________________________________________________________________
 
@@ -67,8 +68,8 @@ class Main_window():
         self.er2 = tk.Label(self.down)
         self.er2.pack()
 
-        self.change_button = tk.Button(self.down, text='SPREMENI', command=self.change)
-        self.change_button.pack()
+        tk.Button(self.down, text='SPREMENI', command=self.change).pack()
+        #tk.Button(self.down, text='PORAVNAJ', command=self.even).pack()
 
         self.er4 = tk.Label(self.down)
         self.er4.pack()
@@ -85,6 +86,9 @@ class Main_window():
     def change(self):
         self.root.destroy()
         Change_window(self.people)
+
+    def even(self):
+        self.root.destroy()
 
 #__________________________________________________________________________________________________________
 
@@ -152,8 +156,12 @@ class Change_window():
         self.amount_entry = tk.Entry(self.down)
         self.amount_label.grid(row=1, column=1)
         self.amount_entry.grid(row=1, column=2)
+        self.name_label = tk.Label(self.down, text='Opis: ')
+        self.name_entry = tk.Entry(self.down)
+        self.name_label.grid(row=2, column=1)
+        self.name_entry.grid(row=2, column=2)
 
-        tk.Button(self.downdown, text='OK', command=self.close).pack()
+        tk.Button(self.downdown, text='OK', command=self.close).grid(row=1, column=1)
 
 
         self.root.mainloop()
@@ -175,17 +183,24 @@ class Change_window():
             self.tab_buttons_down.append(b)
 
     def close(self):
-        self.amount = self.amount_entry.get()
-        if self.amount.isdigit():
+        self.amount = float(self.amount_entry.get())
+        if type(self.amount) == float:
             p = self.l
             p[0].gives(int(self.amount), p[1:])
-            self.root.destroy()
             self.memory_update()
+            self.root.destroy()
             Main_window(self.people)
         else:
-            tk.Label(self.downdown, text='Vpišite naravno število.').pack()
+            tk.Label(self.downdown, text='V znesek vpišite število.').grid(row=7, column=1)
 
     def memory_update(self):
+        n = (self.name_entry.get()).upper()
         with open('memory.txt', 'w') as mem:
             for person in self.people:
                 print('{}, {}'.format(person.name, person.balance), file=mem)
+        with open('trace.txt', 'a') as tr:
+            print('{}'.format(n), file=tr)
+            print('{} je placal/a {} EUR osebam: '.format(self.l[0].name, self.amount), file=tr)
+            for per in self.l[1:]:
+                print(per.name, file=tr)
+            print('\n', file=tr)

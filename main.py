@@ -15,7 +15,8 @@ if number_people == 1000:
             per_name = per[0]
             per_balance = float(per[1][:-1])
             people.append(cw.Person(per_name, per_balance))
-    cw.Main_window(people)
+    window = cw.Main_window(people)
+    p = window.people
 else:
     names = []
     for person in sto.Start_names(number_people).names:
@@ -23,9 +24,10 @@ else:
             names.append(person[0].upper() + person[1:])
         else:
             names.append(person)
-
     people = []
     for name in names:
         people.append(cw.Person(name))
+    window = cw.Main_window(people)
+    p = window.people
 
-    cw.Main_window(people)
+#print(p)

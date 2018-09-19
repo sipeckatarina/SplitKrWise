@@ -1,0 +1,29 @@
+
+
+SLADOLED
+Rena je placal/a 4.4 EUR osebam: 
+Lena
+Rena
+Titi
+Skips
+
+
+SE EN SLADOLED
+Titi je placal/a 6.6 EUR osebam: 
+Bjanka
+Lena
+Rena
+Titi
+Fizi
+Skips
+
+
+KJE SO DECIMALKE
+Bjanka je placal/a 10.5 EUR osebam: 
+Bjanka
+Lena
+Titi
+Rena
+Skips
+
+
